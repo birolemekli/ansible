@@ -1,0 +1,10 @@
+---
+# tasks file for apache
+
+- include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_os_family }}.yml"
+  tags: httpd
+
+- include: redhat_install.yml
+- include: redhat_configuration.yml

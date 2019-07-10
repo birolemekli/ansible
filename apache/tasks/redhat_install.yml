@@ -1,0 +1,9 @@
+---
+
+- name: Apache Kurulumu
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ apache }}"
+  tags: httpd
+  notify: start httpd

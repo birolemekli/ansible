@@ -1,0 +1,8 @@
+---
+
+apache: 
+  - httpd
+httpd_config: /etc/httpd/conf/httpd.conf
+httpd_path: /etc/httpd/conf/
+httpd_file: /var/www/html/
+

@@ -1,0 +1,10 @@
+---
+# defaults file for apache
+
+anonymous_enable: 'anonymous_enable=NO'
+virtual_host_regex: '(^#NameVirtualHost.*)'
+virtual_host_regex_replace: 'NameVirtualHost *:80'
+virtual_host_include: '(^include conf/virtual.*)'
+virtual_host_include_replace: 'include conf/virtual_host.conf'
+
+httpd_allow_directory: '(^<Directory />\n)(^.*AllowOverride.*\n)(^.*Require.*\n)(^</Directory.*)'

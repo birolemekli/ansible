@@ -1,0 +1,37 @@
+---
+    - name: Http directory izinleri duzenleniyor
+      replace:
+            dest: '{{httpd_config}}'
+            regexp: "{{ item.regex }}"
+            replace: "{{ item.replace }}"
+            unsafe_writes: no
+      with_items:
+            - { regex: '{{httpd_allow_directory}}', replace: '\1\2#\3\4' }
+      become: True
+      ignore_errors: yes
+      notify: restart httpd
+
+    - name: virtual_host.conf olusturuluyor...
+      blockinfile:
+            create: yes
+            path: '{{httpd_path}}/virtual_host.conf'
+      become: true
+      ignore_errors: yes
+
+    - name: Virtualhost include ediliyor...
+      lineinfile:
+        path: '{{httpd_config}}'
+        regex: "{{ item.regex }}"
+        line: "{{ item.replace }}"
+        unsafe_writes: no
+      loop:
+        - { regex: '{{virtual_host_regex}}', replace: '{{virtual_host_regex_replace}}' }
+        - { regex: '{{virtual_host_include}}', replace: '{{virtual_host_include_replace}}' }
+      become: True
+      ignore_errors: yes
+      notify: restart httpd
+
+    - name: Test index.html
+      copy:
+          dest: '{{httpd_file}}'
+          src: index.html 
